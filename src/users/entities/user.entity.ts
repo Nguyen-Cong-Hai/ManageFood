@@ -1,3 +1,4 @@
+import { Role } from 'src/constants/enum';
 import {
   Column,
   CreateDateColumn,
@@ -22,24 +23,24 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
   @Column({
     type: 'enum',
-    enum: ['Employee', 'Owner', 'Guest'],
-    default: 'Employee',
+    enum: Role,
+    default: Role.Employee,
   })
   role: string;
 
-  @Column()
+  @Column({ nullable: true })
   refreshToken: string;
 
   @ManyToOne(() => User, (user) => user.employees)
   @JoinColumn({ name: 'ownerId' })
   owner: User;
 
-  @Column()
+  @Column({ nullable: true})
   ownerId: number;
 
   @OneToMany(() => User, (user) => user.owner)
