@@ -35,6 +35,14 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
+  async findUserByToken(refreshToken: string) {
+    return await this.userRepository.findOne({
+      where: {
+        refreshToken,
+      },
+    });
+  }
+
   async findOneByUsername(username: string) {
     return await this.userRepository.findOne({
       where: {
@@ -45,6 +53,15 @@ export class UsersService {
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
+  }
+
+  async updateUserRefreshToken(refreshToken: string, id: number) {
+    return await this.userRepository.update(
+      { id },
+      {
+        refreshToken,
+      },
+    );
   }
 
   remove(id: number) {
